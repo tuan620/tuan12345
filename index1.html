@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Xin lỗi em 💔</title>
+  <style>
+    :root{
+      --bg:#0f1022;
+      --accent:#ff6b9a;
+      --soft:#ffd6e0;
+      --glass: rgba(255,255,255,0.08);
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%;font-family:'Inter',sans-serif;overflow:hidden;background:var(--bg);color:#fff}
+
+    /* Stage */
+    .stage{
+      position:relative;
+      width:100%;
+      height:100vh;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      perspective:1000px;
+      padding:20px;
+      gap:16px;
+      background: radial-gradient(800px 400px at 10% 10%, rgba(255,107,154,0.08), transparent),
+                  radial-gradient(600px 300px at 90% 90%, rgba(255,214,224,0.04), transparent),
+                  var(--bg);
+    }
+
+    header{text-align:center}
+    header h1{font-size:clamp(22px,5vw,36px);margin-bottom:8px}
+    header p{color:#ffd6e0;font-size:clamp(14px,4vw,18px)}
+
+    /* hearts container */
+    .hearts-wrap{
+      position:relative;
+      width:100%;
+      height:60vh;
+      max-width:600px;
+      background:linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
+      border-radius:16px;
+      box-shadow:0 6px 20px rgba(0,0,0,0.6);
+      overflow:hidden;
+      transform-style:preserve-3d;
+      border:1px solid rgba(255,255,255,0.08);
+    }
+
+    /* message card */
+    .message-card{
+      position:absolute;
+      left:50%;
+      top:3%;
+      transform:translateX(-50%);
+      background:var(--glass);
+      backdrop-filter:blur(8px);
+      padding:24px 36px;
+      border-radius:18px;
+      box-shadow:0 8px 26px rgba(0,0,0,0.5);
+      border:1px solid rgba(255,255,255,0.15);
+      max-width:85%;
+      text-align:center;
+      animation:fadeIn 1s ease;
+    }
+    .message-card h2{
+      font-size:clamp(18px,5vw,26px);
+      color:#ff9bb5;
+      margin-bottom:8px;
+      text-shadow:0 0 10px rgba(255,155,181,0.5);
+    }
+    .message-card p{
+      font-size:clamp(14px,4vw,18px);
+      line-height:1.5;
+      color:#fff3f6;
+    }
+    @keyframes fadeIn{from{opacity:0;transform:translate(-50%, -10px);}to{opacity:1;transform:translate(-50%, 0);}}
+
+    /* hearts (generated) */
+    .heart{
+      --size:70px;
+      width:var(--size);
+      height:var(--size);
+      position:absolute;
+      transform-style:preserve-3d;
+      pointer-events:none;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+    .heart .shape{
+      position:relative;
+      width:100%;
+      height:100%;
+      transform-style:preserve-3d;
+    }
+    .heart .shape::before,
+    .heart .shape::after{
+      content:'';
+      position:absolute;
+      left:50%;
+      top:50%;
+      width:60%;
+      height:60%;
+      background:var(--accent);
+      border-radius:50% 50% 0 0;
+      transform-origin:center bottom;
+      box-shadow:inset -6px -6px 18px rgba(0,0,0,0.2);
+    }
+    .heart .shape::before{transform:translate(-50%,-45%) rotate(-45deg);}
+    .heart .shape::after{transform:translate(-50%,-45%) rotate(45deg);}
+
+    .heart .sticker{
+      position:absolute;
+      inset:14% 14% 18% 14%;
+      border-radius:12px;
+      overflow:hidden;
+      background:#fff;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      filter:drop-shadow(0 4px 10px rgba(0,0,0,0.3));
+    }
+    .heart img{width:100%;height:100%;object-fit:cover}
+
+    @keyframes floatUp{
+      0%{transform:translate3d(0,30px,0);opacity:0}
+      15%{opacity:1}
+      100%{transform:translate3d(var(--tx,0),-900px,var(--tz,0));opacity:0}
+    }
+    @keyframes pulse{
+      0%{transform:scale(0.9)}
+      50%{transform:scale(1.05)}
+      100%{transform:scale(0.9)}
+    }
+
+    .controls{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:center;
+      margin-top:10px;
+    }
+    .btn{
+      background:linear-gradient(90deg,#ff8aa7,#ff5c8f);
+      border:none;
+      padding:10px 18px;
+      border-radius:12px;
+      color:white;
+      font-weight:600;
+      cursor:pointer;
+      box-shadow:0 6px 20px rgba(255,80,120,0.2);
+      font-size:clamp(14px,4vw,16px);
+    }
+    .btn.ghost{background:transparent;border:1px solid rgba(255,255,255,0.15)}
+
+    .foot{
+      text-align:center;
+      font-size:clamp(12px,3.5vw,14px);
+      color:#ffd6e0;
+      opacity:0.9;
+      margin-top:8px;
+    }
+  </style>
+</head>
+<body>
+  <div class="stage">
+    <header>
+      <h1>Em à, anh xin lỗiiiiiii 🥺</h1>
+      <p>Gửi em những trái tim nhỏ này – mong em thấy tấm lòng anh ❤️</p>
+    </header>
+
+    <div class="hearts-wrap" id="stage">
+      <div class="message-card">
+        <h2>Một lời xin lỗi</h2>
+        <p>Anh biết mình sai. Xin em cho anh cơ hội sửa chữa.  
+        Anh yêu em hơn mọi điều.</p>
+      </div>
+    </div>
+
+    <div class="controls">
+      <button class="btn" id="spawnBtn">Một trái tim</button>
+      <button class="btn ghost" id="burstBtn">Nhiều trái tim</button>
+      <button class="btn ghost" id="clearBtn">Xóa</button>
+    </div>
+
+    <div class="foot">Chạm nhiều lần để gửi thêm trái tim á . 💌</div>
+  </div>
+
+  <script>
+  // ✅ Ảnh tĩnh nhẹ, thay cho GIF (WebP và PNG)
+  const stickers = [
+    'pic/1.png', 
+    'pic/2.png',
+    'pic/3.png', 
+    'pic/4.png'
+  ];
+
+  const stage = document.getElementById('stage');
+  const random = (min,max)=>Math.random()*(max-min)+min;
+
+  function createHeart(opts={}){
+    const heart = document.createElement('div');
+    heart.className='heart';
+    if(opts.size) heart.classList.add(opts.size);
+
+    const rect=stage.getBoundingClientRect();
+    const x=random(0.1,0.9)*rect.width;
+    const y=random(0.6,0.9)*rect.height;
+    heart.style.left=x+'px';
+    heart.style.top=y+'px';
+    heart.style.setProperty('--tz',Math.floor(random(-150,150))+'px');
+    heart.style.setProperty('--tx',Math.floor(random(-80,80))+'px');
+    const dur=random(5,9);
+
+    const shape=document.createElement('div');
+    shape.className='shape';
+    const sticker=document.createElement('div');
+    sticker.className='sticker';
+    const img=document.createElement('img');
+    img.src=stickers[Math.floor(Math.random()*stickers.length)];
+    img.loading="lazy"; // ✅ giúp load ảnh nhẹ
+    sticker.appendChild(img);
+    shape.appendChild(sticker);
+    heart.appendChild(shape);
+    stage.appendChild(heart);
+
+    // animation nhẹ hơn cho mobile
+    heart.style.animation=`floatUp ${dur}s ease-in forwards`;
+    shape.style.animation=`pulse ${1.4+Math.random()*0.6}s ease-in-out infinite`;
+
+    // xóa sau khi kết thúc animation
+    setTimeout(()=>heart.remove(),(dur+0.3)*1000);
+  }
+
+  // các nút điều khiển
+  document.getElementById('spawnBtn').onclick=()=>createHeart();
+  document.getElementById('burstBtn').onclick=()=>{
+    for(let i=0;i<10;i++){
+      setTimeout(()=>createHeart({}),i*120+Math.random()*100);
+    }
+  };
+  document.getElementById('clearBtn').onclick=()=>{
+    document.querySelectorAll('.heart').forEach(h=>h.remove());
+  };
+
+  // tự động thả tim nhẹ nhàng
+  setInterval(()=>{
+    if(Math.random()<0.6) createHeart();
+  },3000);
+</script>
+</body>
+</html>
